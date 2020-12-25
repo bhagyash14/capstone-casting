@@ -39,10 +39,13 @@ class TriviaTestCase(unittest.TestCase):
     
     def tearDown(self):
         """Executed after reach test"""
-        pass
+
     def testGetActorsSuccess(self):
         res = self.client().get('/actors')
+        data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['message'])
 
     def testGetActorsFailure(self):
         res = self.client().get('/actorrrs')
@@ -50,7 +53,10 @@ class TriviaTestCase(unittest.TestCase):
 
     def testGetMoviesSuccess(self):
         res = self.client().get('/movies')
+        data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['message'])
 
     def testGetMoviesFailure(self):
         res = self.client().get('/moviess')
@@ -58,7 +64,10 @@ class TriviaTestCase(unittest.TestCase):
 
     def testPostActorSuccess(self):
         res = self.client().post('/actors', json=self.new_actor)
+        data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['message'])
 
     def testPostActorFailure(self):
         res = self.client().post('/actorsss', json=self.new_actor)
@@ -66,7 +75,10 @@ class TriviaTestCase(unittest.TestCase):
 
     def testPostMovieSuccess(self):
         res = self.client().post('/movies', json=self.new_movie)
+        data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['message'])
 
     def testPostMoviesFailure(self):
         res = self.client().post('/moviess', json=self.new_movie)
@@ -74,7 +86,10 @@ class TriviaTestCase(unittest.TestCase):
 
     def testPatchActorSuccess(self):
         res = self.client().post('/actors/update/1', json=self.new_actor)
+        data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['message'])
 
     def testPatchActorFailure(self):
         res = self.client().post('/actorsss/update/1', json=self.new_actor)
@@ -82,7 +97,10 @@ class TriviaTestCase(unittest.TestCase):
 
     def testPatchMovieSuccess(self):
         res = self.client().post('/movies/update/1', json=self.new_movie)
+        data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['message'])
 
     def testPatchMoviesFailure(self):
         res = self.client().post('/moviesss/update/1', json=self.new_movie)
@@ -90,7 +108,10 @@ class TriviaTestCase(unittest.TestCase):
 
     def testDeleteActorSuccess(self):
         res = self.client().post('/actors/delete/1')
+        data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['message'])
 
     def testDeleteActorFailure(self):
         res = self.client().post('/actorsss/delete/1')
@@ -98,7 +119,10 @@ class TriviaTestCase(unittest.TestCase):
 
     def testDeleteMovieSuccess(self):
         res = self.client().post('/movies/delete/1')
+        data = json.loads(res.data)
         self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['message'])
 
     def testDeleteMovieFailure(self):
         res = self.client().post('/moviessss/delete/1')

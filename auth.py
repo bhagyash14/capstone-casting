@@ -5,7 +5,7 @@ from jose import jwt
 from urllib.request import urlopen
 
 
-AUTH0_DOMAIN = 'dev-w1q66qr1.us.auth0.com'
+AUTH0_DOMAIN = 'dev-132ehov1.us.auth0.com'
 ALGORITHMS = ['RS256']
 API_AUDIENCE = 'casting-agency'
 

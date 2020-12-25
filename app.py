@@ -10,7 +10,7 @@ from auth import AuthError, requires_auth
 def create_app(test_config=None):
     app = Flask(__name__)
     setup_db(app)
-    CORS(app,resources={r"/api/": {"origins": "*"}})
+    #CORS(app,resources={r"/api/": {"origins": "*"}})
 
     @app.after_request
     def after_request(response):
@@ -181,4 +181,5 @@ def create_app(test_config=None):
         response = jsonify(error.error)
         response.status_code = error.status_code
         return response
+
     return app
