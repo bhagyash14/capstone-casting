@@ -29,7 +29,6 @@ dominate==2.5.1
 ecdsa==0.15
 filelock==3.0.12
 Flask==1.0.3
-Flask-APSchedule1.11.0
 Flask-Babel==1.0.0
 Flask-CLI== 0.4.0
 Flask-Cors==3.0.7
