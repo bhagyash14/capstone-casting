@@ -98,7 +98,7 @@ Delete actor details by id from the database
 Delete movie details by id from the database
 
 ## Testing
-There are 20 unittests in test_app.py. To run this file use:
+There are 17 unittests in test_app.py. To run this file use:
 ```
 python test_app.py
 ```
