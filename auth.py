@@ -7,7 +7,7 @@ from urllib.request import urlopen
 
 AUTH0_DOMAIN = 'capstone-admin.us.auth0.com'
 ALGORITHMS = ['RS256']
-API_AUDIENCE = 'agency-api'
+API_AUDIENCE = 'http://127.0.0.1:5000'
 CLIENT_ID = 'QvsqXaFdw95ybQhMNelS25IaGP3OAmd5'
 
 class AuthError(Exception):
