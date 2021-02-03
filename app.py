@@ -7,9 +7,16 @@ from flask_cors import CORS
 from models import db_drop_and_create_all, setup_db, Actor, Movie
 from auth import AuthError, requires_auth
 
+AUTH0_DOMAIN = 'capstone-admin.us.auth0.com'
+ALGORITHMS = ['RS256']
+AUTH0_JWT_API_AUDIENCE = 'agency-api'
+AUTH0_CLIENT_ID = 'QvsqXaFdw95ybQhMNelS25IaGP3OAmd5'
+AUTH0_CALLBACK_URL = 'http://127.0.0.1:8100'
+
 def create_app(test_config=None):
     app = Flask(__name__)
     setup_db(app)
+    cors=CORS(app)
     #CORS(app,resources={r"/api/": {"origins": "*"}})
 
     @app.after_request
@@ -19,19 +26,29 @@ def create_app(test_config=None):
         return response
     #db_drop_and_create_all()
 
+    @app.route("/authorization/url", methods=["GET"])
+    def generate_auth_url():
+        url = f'https://{AUTH0_DOMAIN}/authorize' \
+            f'?audience={AUTH0_JWT_API_AUDIENCE}' \
+            f'&response_type=token&client_id=' \
+            f'{AUTH0_CLIENT_ID}&redirect_uri=' \
+            f'{AUTH0_CALLBACK_URL}'
+        return jsonify({
+            'url': url
+        })
     @app.route('/actors', methods=['GET'])
-    @requires_auth('get:actors')
+    @requires_auth('get:actor')
     def get_all_actors():
-        all_actors = Actor.query.all()
+        all_actors = [actors.format() for actors in Actor.query.all()]
         return jsonify({
             'success': True,
             'actors': all_actors
         }),200
 
     @app.route('/movies', methods=['GET'])
-    @requires_auth('get:movies')
+    @requires_auth('get:movie')
     def get_all_movies():
-        all_movies = Movie.query.all()
+        all_movies = [movies.format() for movies in Movie.query.all()]
 
         return jsonify({
             'success': True,
@@ -39,7 +56,7 @@ def create_app(test_config=None):
         }),200
 
     @app.route('/actors', methods=['POST'])
-    @requires_auth('post:actors')
+    @requires_auth('add:actor')
     def post_actors(payload):
         data = request.get_json()
         if 'name' and 'age' and 'gender' not in data:
@@ -59,7 +76,7 @@ def create_app(test_config=None):
         }),200
 
     @app.route('/movies', methods=['POST'])
-    @requires_auth('post:movies')
+    @requires_auth('add:movie')
     def post_movies(payload):
         data = request.get_json()
         if 'title' and 'release_date' not in data:
@@ -78,7 +95,7 @@ def create_app(test_config=None):
         }),200
 
     @app.route('/actors/update/<int:id>', methods=['PATCH'])
-    @requires_auth('patch:actors')
+    @requires_auth('update:actor')
     def patch_actor(payload, id):
         actor = Actor.query.filter(Actor.id == id).one_or_none()
         if not actor:
@@ -100,7 +117,7 @@ def create_app(test_config=None):
         }),200
 
     @app.route('/movies/update/<int:id>', methods=['PATCH'])
-    @requires_auth('patch:movies')
+    @requires_auth('update:movie')
     def patch_movie(payload, id):
         movie = Movie.query.filter(Movie.id == id).one_or_none()
         if not movie:
@@ -120,7 +137,7 @@ def create_app(test_config=None):
         }),200
 
     @app.route('/actors/delete/<int:id>', methods=['DELETE'])
-    @requires_auth('delete:actors')
+    @requires_auth('delete:actor')
     def delete_actor(payload, id):
 
         actor = Actor.query.filter(Actor.id == id).one_or_none()
@@ -136,7 +153,7 @@ def create_app(test_config=None):
         }),200
 
     @app.route('/movies/delete/<int:id>', methods=['DELETE'])
-    @requires_auth('delete:movies')
+    @requires_auth('delete:movie')
     def delete_movie(payload, id):
 
         movie = Movie.query.filter(Movie.id == id).one_or_none()
