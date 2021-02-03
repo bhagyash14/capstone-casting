@@ -9,7 +9,7 @@ from auth import AuthError, requires_auth
 
 AUTH0_DOMAIN = 'capstone-admin.us.auth0.com'
 ALGORITHMS = ['RS256']
-AUTH0_JWT_API_AUDIENCE = 'agency-api'
+AUTH0_JWT_API_AUDIENCE = 'http://127.0.0.1:5000'
 AUTH0_CLIENT_ID = 'QvsqXaFdw95ybQhMNelS25IaGP3OAmd5'
 AUTH0_CALLBACK_URL = 'http://127.0.0.1:8100'
 
@@ -38,7 +38,7 @@ def create_app(test_config=None):
         })
     @app.route('/actors', methods=['GET'])
     @requires_auth('get:actor')
-    def get_all_actors():
+    def get_all_actors(token):
         all_actors = [actors.format() for actors in Actor.query.all()]
         return jsonify({
             'success': True,
@@ -47,7 +47,7 @@ def create_app(test_config=None):
 
     @app.route('/movies', methods=['GET'])
     @requires_auth('get:movie')
-    def get_all_movies():
+    def get_all_movies(token):
         all_movies = [movies.format() for movies in Movie.query.all()]
 
         return jsonify({
@@ -67,7 +67,7 @@ def create_app(test_config=None):
         actor_gender = data['gender']
 
         new_actor = Actor(name=actor_name, age=actor_age , gender=actor_gender)
-        actors.insert()
+        new_actor.insert()
 
         return jsonify({
             'success': True,
@@ -86,7 +86,7 @@ def create_app(test_config=None):
         movie_release_date = data['release_date']
 
         new_movie = Movie(title=movie_title, release_date=movie_release_date)
-        movies.insert()
+        new_movie.insert()
 
         return jsonify({
             'success': True,
