@@ -73,15 +73,10 @@ In case of token expiration,it can be generated using the below steps:
 1. Go to http://capstone-admin.us.auth0.com/authorize?response_type=token&client_id=QvsqXaFdw95ybQhMNelS25IaGP3OAmd5&redirect_uri=http://127.0.0.1:8100
 
 2. Click on Login button and enter the below mail ids and passwords as per the requirement:
-Assistant
-	Email: asst@gmail.com
-	Password: Capstone11@
-Director
-	Email: director@gmail.com
-	Password: Capstone11@
-Producer
-	Email: producer@gmail.com
-	Password: Capstone11@
+Assistant(asst@gmail.com)
+Director(director@gmail.com)
+Producer(producer@gmail.com)
+Passsword for all the users: Capstone11@
 
 
 
