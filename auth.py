@@ -5,9 +5,10 @@ from jose import jwt
 from urllib.request import urlopen
 
 
-AUTH0_DOMAIN = 'dev-132ehov1.us.auth0.com'
+AUTH0_DOMAIN = 'capstone-admin.us.auth0.com'
 ALGORITHMS = ['RS256']
-API_AUDIENCE = 'casting-agency'
+API_AUDIENCE = 'agency-api'
+CLIENT_ID = 'QvsqXaFdw95ybQhMNelS25IaGP3OAmd5'
 
 class AuthError(Exception):
     def __init__(self, error, status_code):
